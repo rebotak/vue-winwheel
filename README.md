@@ -1,6 +1,8 @@
 # vue-winwheel
+a winwheel for vuejs based on http://dougtesting.net/home 
 
-https://www.npmjs.com/package/vue-winwheel
+
+published on: https://www.npmjs.com/package/vue-winwheel
 
 # Demo
 
