@@ -1,29 +1,80 @@
 # vue-winwheel
 
-## Project setup
-```
-npm install
+# Demo
+
+The demo page is [HERE](http://rebotak.github.io/vue-winwheel/demo.html).
+
+# Installation
+
+## npm
+
+```shell
+$ npm install vue-winwheel
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
+# Usage
+
+## Basic
+
+```html
+  <vue-winwheel :segments="options"/>
 ```
 
-### Compiles and minifies for production
 ```
-npm run build
+<script>
+import VueWinwheel from './VueWinwheel.vue'
+
+export default {
+  data(){
+    return{
+      options:[
+					{
+						textFillStyle: '#fff',
+						fillStyle: '#000',
+						text:'Prize 1'
+					},
+					{
+						textFillStyle: '#000',
+						fillStyle: '#fadede',
+						text:'Prize 2'
+					},
+					{
+						textFillStyle: '#fff',
+						fillStyle: '#000',
+						text:'Prize 3'
+					},
+					{
+						textFillStyle: '#000',
+						fillStyle: '#fadede',
+						text:'Prize 4'
+					},
+					{
+						textFillStyle: '#fff',
+						fillStyle: '#000',
+						text:'Prize 5'
+					},
+					{
+						textFillStyle: '#000',
+						fillStyle: '#fadede',
+						text:'Prize 6'
+					},
+					{
+						textFillStyle: '#fff',
+						fillStyle: '#000',
+						text:'Prize 7'
+					},
+					{
+						textFillStyle: '#000',
+						fillStyle: '#fadede',
+						text:'Prize 8'
+					}
+				]
+    }
+  }
+}
+</script>
 ```
 
-### Run your tests
-```
-npm run test
-```
+# License
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+[The MIT License](http://opensource.org/licenses/MIT)
