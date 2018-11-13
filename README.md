@@ -1,8 +1,10 @@
 # vue-winwheel
 
+https://www.npmjs.com/package/vue-winwheel
+
 # Demo
 
-The demo page is [HERE](http://rebotak.github.io/vue-winwheel/demo.html).
+The demo page is [HERE](http://rebotak.github.io/vue-winwheel/demo.html). or maybe just download this repository and try the `demo.html` file
 
 # Installation
 
