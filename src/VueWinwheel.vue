@@ -1,15 +1,15 @@
 <template>
 		<section class="vue-winwheel">
 			<div class="mobile-container">
-				<h1>Vue-Winwheel</h1>
+				<h1>{{pageTitle}}</h1>
 				<div class="wheel-wrapper">
 					<div class="canvas-wrapper">
-						<canvas id="canvas" width="310" height="310">
+						<canvas id="canvas" :width="getWheelSize()" :height="getWheelSize()">
 							<p style="{color: white}" align="center">Sorry, your browser doesn't support canvas. Please try Google Chrome.</p>
 						</canvas>
 					</div>
 					<div class="button-wrapper">
-						<a class="btn btn-play" href="#" @click.prevent="startSpin()" v-if="!loadingPrize && !wheelSpinning">SPIN!</a>
+						<a class="btn btn-play" href="#" @click="startSpin()" v-if="!loadingPrize && !wheelSpinning">SPIN!</a>
 					</div>
 				</div>
 			</div>
@@ -32,82 +32,70 @@
 import * as Winwheel from './Winwheel'
 
 export default {
-  name: 'VueWinWheel',
   props:{
-		segments:{
-			default(){
-				return [
-					{
-						textFillStyle: '#fff',
-						fillStyle: '#000',
-						text:'Prize 1'
-					},
-					{
-						textFillStyle: '#000',
-						fillStyle: '#fadede',
-						text:'Prize 2'
-					},
-					{
-						textFillStyle: '#fff',
-						fillStyle: '#000',
-						text:'Prize 3'
-					},
-					{
-						textFillStyle: '#000',
-						fillStyle: '#fadede',
-						text:'Prize 4'
-					},
-					{
-						textFillStyle: '#fff',
-						fillStyle: '#000',
-						text:'Prize 5'
-					},
-					{
-						textFillStyle: '#000',
-						fillStyle: '#fadede',
-						text:'Prize 6'
-					},
-					{
-						textFillStyle: '#fff',
-						fillStyle: '#000',
-						text:'Prize 7'
-					},
-					{
-						textFillStyle: '#000',
-						fillStyle: '#fadede',
-						text:'Prize 8'
-					}
-				]
-			}
-		}
+		btnColor				: String,
+		pageTitle				: String,
+		wheelSize				: null,
+		segments				: Array,
+		spinSound				: Boolean,
+		customSpinSound	: String
   },
   data () {
     return {
-      loadingPrize: false,
-      theWheel: null,
-      modalPrize: false,
-      wheelPower: 1,
-      wheelSpinning: false,
-      prizeName: 'BUY 1 GET 1',
-      WinWheelOptions: {
-        textFontSize: 14,
-        outterRadius: 410,
-        innerRadius: 25,
-        lineWidth: 8,
-        animation: {
-          type: 'spinOngoing',
-          duration: 0.5
-        }
+      loadingPrize		: false,
+      theWheel				: null,
+      modalPrize			: false,
+      wheelPower			: 1,
+      wheelSpinning		: false,
+      prizeName				: 'BUY 1 GET 1',
+      WinWheelOptions	: {
+      	textFontSize	: 14,
+      	outterRadius	: 410,
+      	innerRadius		: 25,
+      	lineWidth			: 8,
+      	animation			: {
+        	type 		: 	'spinOngoing',
+        	duration: 0.5
+      	}
       }
     }
   },
   methods: {
-    showPrize () {
+		getWheelSize(){
+			if (this.wheelSize){
+				return this.wheelSize
+			}
+			else {
+				return 400
+			}
+		},
+	  showPrize () {
       this.modalPrize = true
     },
     hidePrize () {
       this.modalPrize = false
     },
+		// playSound(){
+		// 	// CHECK IF THE USER WANTS A SOUND PLAYED AS THE WHEEL SPINS
+		// 	if (this.spinSound == true){
+		// 		let sound = new Audio();
+		// 		// DOES THE USER WANT A CUSTOM SOUND?
+		// 		if (this.customSpinSound == true){
+		// 			sound.src = this.customSpinSound
+		// 		}
+		// 		else {
+		// 			sound.src = 'tick.mp3'
+		// 		}
+		// 		let audio = sound.play()
+		// 		audio.then(() => {
+		// 			sound.pause()
+		// 			sound.currentTime = 0
+		// 		})
+		// 		.catch(err => {
+		// 			console.log(err)
+		// 		})
+		// 	}
+		// },
     startSpin () {
       if (this.wheelSpinning === false) {
         this.theWheel.startAnimation()
@@ -121,9 +109,9 @@ export default {
             duration: 5,
             spins: 5,
             callbackFinished: this.onFinishSpin
+						// callbackSound		: this.playSound
           }
         })
-
         // example input prize number get from Backend
         // Important thing is to set the stopAngle of the animation before stating the spin.
 
@@ -245,9 +233,7 @@ export default {
 .vue-winwheel .canvas-wrapper:before {
 	content: '';
 	display: block;
-	width: 310px;
 	background: #0f0f0f;
-	height: 310px;
 	position: absolute;
 	left: 0;
 	right: 0;
