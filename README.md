@@ -1,5 +1,5 @@
 # vue-winwheel
-a winwheel for vuejs based on http://dougtesting.net/home 
+a winwheel for vuejs based on http://dougtesting.net/home
 
 
 published on: https://www.npmjs.com/package/vue-winwheel
@@ -21,7 +21,16 @@ $ npm install vue-winwheel
 ## Basic
 
 ```html
-  <vue-winwheel :segments="options"/>
+  <vue-winwheel
+    :segments="options"
+    :wheelSize="wheelSize"
+    :pageTitle="pageTitle"
+    :lineWidth="lineWidth"
+    :btnColor="btnColor"
+    :btnText="btnText"
+    :spinSound="spinSound"
+    :customSpinSound="customSpinSound"
+  />
 ```
 
 ```
@@ -31,6 +40,9 @@ import VueWinwheel from './VueWinwheel.vue'
 export default {
   data(){
     return{
+      wheelSize: 310,
+      pageTitle: 'Vue-Wheel'
+      lineWidth: 3,
       options:[
 					{
 						textFillStyle: '#fff',
