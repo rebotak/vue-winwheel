@@ -1,61 +1,67 @@
 <template>
-		<section class="vue-winwheel">
-			<div class="mobile-container">
-				<h1>{{pageTitle}}</h1>
-				<div class="wheel-wrapper">
-					<div class="canvas-wrapper">
-						<canvas id="canvas" :width="getWheelSize()" :height="getWheelSize()">
-							<p style="{color: white}" align="center">Sorry, your browser doesn't support canvas. Please try Google Chrome.</p>
-						</canvas>
-					</div>
-					<div class="button-wrapper">
-						<a class="btn btn-play" href="#" @click="startSpin()" v-if="!loadingPrize && !wheelSpinning">SPIN!</a>
-					</div>
+	<section class="vue-winwheel">
+		<div class="mobile-container">
+			<h1>{{pageTitle}}</h1>
+			<div class="wheel-wrapper">
+				<div class="canvas-wrapper">
+					<canvas id="canvas" :width="getWheelSize()" :height="getWheelSize()">
+						<p style="{color: white}" align="center">
+							Sorry, your browser doesn't support canvas. Please try Google Chrome.
+						</p>
+					</canvas>
 				</div>
-			</div>
-			<div class="custom-modal modal-mask" id="modalSpinwheel" v-if="modalPrize">
-				<div slot="body">
-					<a href="" @click.prevent="hidePrize()" class="modal-dismiss">
-						<i class="icon_close"></i>
+				<div class="button-wrapper">
+					<a
+						class="btn btn-play"
+						:style="getBtnColor()"
+						@click.prevent="startSpin()"
+						v-if="!loadingPrize && !wheelSpinning">{{getBtnText()}}
 					</a>
-					<h2>
-						Yay you got the prize!!
-					</h2>
-					<h1> {{prizeName}}</h1>
 				</div>
 			</div>
-		</section>
+		</div>
+		<prizeModal
+			v-if="showModal"
+			@close="resetWheel()"
+			:prizeName="modalPrize.text"
+			:prizeDesc="modalPrize.desc">
+		</prizeModal>
+	</section>
 </template>
 
 
 <script>
 import * as Winwheel from './Winwheel'
-
+import prizeModal from './prizeModal'
 export default {
+	components: {
+		prizeModal
+	},
   props:{
 		btnColor				: String,
+		btnText					: String,
 		pageTitle				: String,
 		wheelSize				: null,
 		segments				: Array,
 		spinSound				: Boolean,
-		customSpinSound	: String
+		customSpinSound	: String,
   },
   data () {
     return {
       loadingPrize		: false,
       theWheel				: null,
-      modalPrize			: false,
+      modalPrize			: {},
+			showModal				: false,
       wheelPower			: 1,
       wheelSpinning		: false,
-      prizeName				: 'BUY 1 GET 1',
       WinWheelOptions	: {
       	textFontSize	: 14,
       	outterRadius	: 410,
       	innerRadius		: 25,
       	lineWidth			: 8,
       	animation			: {
-        	type 		: 	'spinOngoing',
-        	duration: 0.5
+        	type 				: 'spinOngoing',
+        	duration		: 0.5
       	}
       }
     }
@@ -69,33 +75,34 @@ export default {
 				return 400
 			}
 		},
-	  showPrize () {
-      this.modalPrize = true
-    },
     hidePrize () {
-      this.modalPrize = false
+			this.modalPrize = {}
+			this.showModal	= true
     },
-		// playSound(){
-		// 	// CHECK IF THE USER WANTS A SOUND PLAYED AS THE WHEEL SPINS
-		// 	if (this.spinSound == true){
-		// 		let sound = new Audio();
-		// 		// DOES THE USER WANT A CUSTOM SOUND?
-		// 		if (this.customSpinSound == true){
-		// 			sound.src = this.customSpinSound
-		// 		}
-		// 		else {
-		// 			sound.src = 'tick.mp3'
-		// 		}
-		// 		let audio = sound.play()
-		// 		audio.then(() => {
-		// 			sound.pause()
-		// 			sound.currentTime = 0
-		// 		})
-		// 		.catch(err => {
-		// 			console.log(err)
-		// 		})
-		// 	}
-		// },
+		getSounds(){
+			//DOES THE USER WANT ANY SOUND WHEN THE WHEEL SPINS?
+			if (this.spinSound == true){
+				// DOES THE USER WANT A CUSTOM SOUND?
+				let sound = new Audio()
+				if (this.customSpinSound){
+					sound.src = this.customSpinSound
+				}
+				else {
+					sound.src = require('@/tick.mp3')
+				}
+				this.playSound(sound)
+			}
+		},
+		playSound(soundObj){
+			let audio = soundObj.play()
+			audio.then(() => {
+				// soundObj.pause()
+				soundObj.currentTime = 0
+			})
+			.catch(err => {
+				console.log("Error: " + err)
+			})
+		},
     startSpin () {
       if (this.wheelSpinning === false) {
         this.theWheel.startAnimation()
@@ -108,22 +115,16 @@ export default {
             type: 'spinToStop',
             duration: 5,
             spins: 5,
-            callbackFinished: this.onFinishSpin
-						// callbackSound		: this.playSound
+            callbackFinished: this.onFinishSpin,
+						callbackSound		: this.getSounds
           }
         })
-        // example input prize number get from Backend
-        // Important thing is to set the stopAngle of the animation before stating the spin.
-
-        var prizeNumber = Math.floor(Math.random() * this.segments.length) // or just get from Backend
-        var stopAt = 360 / this.segments.length * prizeNumber - 360 / this.segments.length / 2 // center pin
-        // var stopAt = 360 / this.segments.length * prizeNumber - Math.floor(Math.random() * 60) //random location
-        this.theWheel.animation.stopAngle = stopAt
         this.theWheel.startAnimation()
         this.wheelSpinning = false
       }
     },
     resetWheel () {
+			this.showModal = false
       this.theWheel = new Winwheel.Winwheel({
         ...this.WinWheelOptions,
         numSegments: this.segments.length,
@@ -140,21 +141,40 @@ export default {
     },
     initSpin () {
       this.loadingPrize = true
-            this.resetWheel()
-            this.loadingPrize = false
+      this.resetWheel()
+      this.loadingPrize = false
     },
-    onFinishSpin (indicatedSegment) {
-      this.prizeName = indicatedSegment.text
-      this.showPrize()
-    }
+    onFinishSpin () {
+			let prize 			= this.theWheel.getIndicatedSegment()
+			this.modalPrize = {
+				text: prize.text,
+				desc: prize.desc
+			}
+      this.showModal = true
+    },
+		getBtnColor(){
+			let style = 'cursor:pointer; background:'
+			if (this.btnColor){
+				return `${style}${this.btnColor};`
+			}
+			else {
+				return `${style}#c4376f;`
+			}
+		},
+		getBtnText(){
+			if (this.btnText) {
+				return this.btnText
+			}
+			else {
+				return 'SPIN!'
+			}
+		}
   },
   computed: {},
   updated () {},
   mounted () {
     this.initSpin()
-    // this.resetWheel()
   },
-  created () {}
 }
 
 </script>
@@ -270,7 +290,6 @@ export default {
 }
 .vue-winwheel .wheel-wrapper .btn.btn-play {
 	padding: 0 58px !important;
-	background: #c4376f;
 	height: 40px;
 	line-height: 40px;
 	color: white;

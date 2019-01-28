@@ -5,6 +5,10 @@
       :wheelSize="wheelSize"
       :pageTitle="pageTitle"
       :lineWidth="lineWidth"
+      :btnColor="btnColor"
+      :btnText="btnText"
+      :spinSound="spinSound"
+      :customSpinSound="customSpinSound"
     />
   </div>
 </template>
@@ -19,49 +23,61 @@ export default {
   },
   data(){
     return{
-      pageTitle: "Vue-Wheel",
-      wheelSize: 400,
-      lineWidth: 3,
-      options:[
+      pageTitle       : "Vue-Wheel",
+      wheelSize       : 400,
+      btnColor        : "",
+      btnText         : "",
+      lineWidth       : 3,
+      spinSound       : true,
+      customSpinSound : "",
+      options         :[
 					{
 						textFillStyle: '#fff',
 						fillStyle: '#000',
-						text:'Prize 1'
+						text:'Prize 1',
+            desc: "Description 1"
 					},
 					{
 						textFillStyle: '#000',
 						fillStyle: '#fadede',
-						text:'Prize 2'
+						text:'Prize 2',
+            desc: "Description 2"
 					},
 					{
 						textFillStyle: '#fff',
 						fillStyle: '#000',
-						text:'Prize 3'
+						text:'Prize 3',
+            desc: "Description 3"
 					},
 					{
 						textFillStyle: '#000',
 						fillStyle: '#fadede',
-						text:'Prize 4'
+						text:'Prize 4',
+            desc: "Description 4"
 					},
 					{
 						textFillStyle: '#fff',
 						fillStyle: '#000',
-						text:'Prize 5'
+						text:'Prize 5',
+            desc: "Description 5"
 					},
 					{
 						textFillStyle: '#000',
 						fillStyle: '#fadede',
-						text:'Prize 6'
+						text:'Prize 6',
+            desc: "Description 6"
 					},
 					{
 						textFillStyle: '#fff',
 						fillStyle: '#000',
-						text:'Prize 7'
+						text:'Prize 7',
+            desc: "Description 7"
 					},
 					{
 						textFillStyle: '#000',
 						fillStyle: '#fadede',
-						text:'Prize 8'
+						text:'Prize 8',
+            desc: "Description 8"
 					}
 				]
     }

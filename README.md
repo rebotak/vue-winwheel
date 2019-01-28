@@ -26,6 +26,10 @@ $ npm install vue-winwheel
     :wheelSize="wheelSize"
     :pageTitle="pageTitle"
     :lineWidth="lineWidth"
+    :btnColor="btnColor"
+    :btnText="btnText"
+    :spinSound="spinSound"
+    :customSpinSound="customSpinSound"
   />
 ```
 
