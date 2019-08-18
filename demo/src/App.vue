@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import VueWinwheel from "VueWinwheel/VueWinwheel";
+import VueWinwheel from "vue-winwheel/vue-winwheel";
 
 export default {
   name: "app",
