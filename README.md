@@ -1,12 +1,12 @@
 # vue-winwheel
-a winwheel for vuejs based on http://dougtesting.net/home 
 
+a winwheel for vuejs based on http://dougtesting.net/home
 
 published on: https://www.npmjs.com/package/vue-winwheel
 
 # Demo
 
-The demo page is [HERE](http://rebotak.github.io/vue-winwheel/demo.html). or maybe just download this repository and try the `demo.html` file
+The demo page is [HERE](http://rebotak.github.io/vue-winwheel/demo.html). or maybe just download this repository and `npm install`, `npm serve` the `demo` folder
 
 # Installation
 
@@ -21,7 +21,7 @@ $ npm install vue-winwheel
 ## Basic
 
 ```html
-  <vue-winwheel :segments="options"/>
+<vue-winwheel :segments="options" />
 ```
 
 ```
