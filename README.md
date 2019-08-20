@@ -21,14 +21,17 @@ $ npm install vue-winwheel
 ## Basic
 
 ```html
-<vue-winwheel :segments="options" />
+<VueWinwheel :segments="options" />
 ```
 
 ```
 <script>
-import VueWinwheel from './VueWinwheel.vue'
+import VueWinwheel from 'vue-winwheel/vue-winwheel'
 
 export default {
+  components:{
+    VueWinwheel
+  },
   data(){
     return{
       options:[
