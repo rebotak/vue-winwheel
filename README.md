@@ -11,7 +11,7 @@ Download this repository
 git clone git@github.com:rebotak/vue-winwheel.git
 ```
 
-then enter the demo folder
+Go to the demo folder
 ```shell
 /vue-winwheel/demo
 ```
