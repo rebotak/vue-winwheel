@@ -6,7 +6,26 @@ published on: https://www.npmjs.com/package/vue-winwheel
 
 # Demo
 
-The demo page is [HERE](http://rebotak.github.io/vue-winwheel/demo.html). or maybe just download this repository and `npm install`, `npm serve` the `demo` folder
+Download this repository
+```shell
+git clone git@github.com:rebotak/vue-winwheel.git
+```
+
+then enter the demo folder
+```shell
+/vue-winwheel/demo
+```
+
+Then install dependencies
+```shell
+npm install
+```
+
+And run the project
+```shell
+npm serve
+```
+
 
 # Installation
 
