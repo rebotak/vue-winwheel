@@ -1,16 +1,16 @@
 <template>
 		<section class="vue-winwheel">
 			<div class="mobile-container">
-				<h1>Vue-Winwheel</h1>
+				<h1 v-if="wheelTitle">{{wheelTitle}}</h1>
 				<div class="wheel-wrapper">
 					<div class="canvas-wrapper">
 						<canvas id="canvas" width="310" height="310">
-							<p style="{color: white}" align="center">Sorry, your browser doesn't support canvas. Please try Google Chrome.</p>
+							<p style="color: white" align="center">Sorry, your browser doesn't support canvas. Please try Google Chrome.</p>
 						</canvas>
 					</div>
-					<div class="button-wrapper">
+					<!-- <div class="button-wrapper">
 						<a class="btn btn-play" href="#" @click.prevent="startSpin()" v-if="!loadingPrize && !wheelSpinning">SPIN!</a>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<div class="custom-modal modal-mask" id="modalSpinwheel" v-if="modalPrize">
@@ -18,9 +18,6 @@
 					<a href="" @click.prevent="hidePrize()" class="modal-dismiss">
 						<i class="icon_close"></i>
 					</a>
-					<h2>
-						Yay you got the prize!!
-					</h2>
 					<h1> {{prizeName}}</h1>
 				</div>
 			</div>
@@ -34,8 +31,9 @@ import * as Winwheel from './Winwheel'
 export default {
   name: 'VueWinWheel',
   props:{
-		segments:{
-			default(){
+		wheelTitle: String,
+		segments: {
+			default () {
 				return [
 					{
 						textFillStyle: '#fff',
@@ -104,12 +102,14 @@ export default {
   methods: {
     showPrize () {
       this.modalPrize = true
-    },
+	},
+
     hidePrize () {
       this.modalPrize = false
-    },
+	},
+
     startSpin () {
-      if (this.wheelSpinning === false) {
+      if (!this.wheelSpinning) {
         this.theWheel.startAnimation()
         this.wheelSpinning = true
         this.theWheel = new Winwheel.Winwheel({
@@ -127,14 +127,15 @@ export default {
         // example input prize number get from Backend
         // Important thing is to set the stopAngle of the animation before stating the spin.
 
-        var prizeNumber = Math.floor(Math.random() * this.segments.length) // or just get from Backend
-        var stopAt = 360 / this.segments.length * prizeNumber - 360 / this.segments.length / 2 // center pin
+        const prizeNumber = Math.floor(Math.random() * this.segments.length) // or just get from Backend
+        const stopAt = 360 / this.segments.length * prizeNumber - 360 / this.segments.length / 2 // center pin
         // var stopAt = 360 / this.segments.length * prizeNumber - Math.floor(Math.random() * 60) //random location
         this.theWheel.animation.stopAngle = stopAt
         this.theWheel.startAnimation()
         this.wheelSpinning = false
       }
-    },
+	},
+
     resetWheel () {
       this.theWheel = new Winwheel.Winwheel({
         ...this.WinWheelOptions,
@@ -149,29 +150,34 @@ export default {
       this.theWheel.rotationAngle = 0 // Re-set the wheel angle to 0 degrees.
       this.theWheel.draw() // Call draw to render changes to the wheel.
       this.wheelSpinning = false // Reset to false to power buttons and spin can be clicked again.
-    },
+	},
+
     initSpin () {
-      this.loadingPrize = true
-            this.resetWheel()
-            this.loadingPrize = false
-    },
+	  this.loadingPrize = true
+	  this.resetWheel()
+	  this.loadingPrize = false
+	},
+
     onFinishSpin (indicatedSegment) {
       this.prizeName = indicatedSegment.text
       this.showPrize()
     }
   },
-  computed: {},
-  updated () {},
+
   mounted () {
     this.initSpin()
-    // this.resetWheel()
-  },
-  created () {}
+  }
 }
 
 </script>
 
 <style scoped>
+:root {
+	--font-color: #b32656;
+	--icon-color: #da2a52;
+	--wheel-color: #c4376f;
+}
+
 .vue-winwheel {
 	text-align: center;
 	background-image: url('/static/img/obstacle-run/bg-spinner-mobile.svg');
@@ -180,7 +186,7 @@ export default {
 	background-repeat: no-repeat;
 }
 .vue-winwheel h1 {
-	color: #b32656;
+	color: var(--font-color);
 	font-family: 'Avenir', Helvetica, Arial, sans-serif;
 	font-size: 36px;
 	line-height: 90px;
@@ -196,7 +202,7 @@ export default {
 }
 .vue-winwheel #modalSpinwheel.custom-modal .content-wrapper .content h2 {
 	text-transform: uppercase;
-	color: #b32656;
+	color: var(--font-color);
 	margin-bottom: 16px;
 	margin-top: 0;
 	font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -220,7 +226,7 @@ export default {
 }
 .vue-winwheel #modalSpinwheel.custom-modal .content-wrapper .content .modal-dismiss i.icon_close {
 	font-size: 30px;
-	color: #da2a52;
+	color: var(--icon-color);
 }
 .vue-winwheel canvas#canvas {
 	position: relative;
@@ -232,7 +238,7 @@ export default {
 	content: '';
 	display: block;
 	width: 42px;
-	background: #c4376f;
+	background: var(--wheel-color);
 	height: 42px;
 	position: absolute;
 	left: calc(50% - 25px);
@@ -284,7 +290,7 @@ export default {
 }
 .vue-winwheel .wheel-wrapper .btn.btn-play {
 	padding: 0 58px !important;
-	background: #c4376f;
+	background: var(--wheel-color);
 	height: 40px;
 	line-height: 40px;
 	color: white;
