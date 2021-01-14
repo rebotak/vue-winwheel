@@ -1,14 +1,16 @@
-# vue-winwheel
+# Vue WinWheel
 
-a winwheel for vuejs based on http://dougtesting.net/home
+A wheel component for Vue 2.x based on http://dougtesting.net/home
 
-published on: https://www.npmjs.com/package/vue-winwheel
+Published on: https://www.npmjs.com/package/vue-winwheel
+
+This fork is based on https://github.com/rebotak/vue-winwheel. Most of the changes here involved some logic cleanup and changes to make some of the wheek properties optional.
 
 # Demo
 
 Download this repository
 ```shell
-git clone git@github.com:rebotak/vue-winwheel.git
+git clone git@github.com:cshomo11/vue-winwheel.git
 ```
 
 Go to the demo folder
