@@ -4,7 +4,7 @@ A wheel component for Vue 2.x based on http://dougtesting.net/home
 
 Published on: https://www.npmjs.com/package/vue-winwheel
 
-This fork is based on https://github.com/rebotak/vue-winwheel. Most of the changes here involved some logic cleanup and changes to make some of the wheek properties optional.
+This fork is based on https://github.com/rebotak/vue-winwheel. Most of the changes here involved some logic cleanup and changes to make some of the wheel properties optional.
 
 # Demo
 
