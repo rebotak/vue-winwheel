@@ -1,9 +1,8 @@
 {
 	"name": "vue-winwheel",
-	"version": "1.0.0",
+	"version": "2.0.0",
 	"author": {
-		"name": "rebotak",
-		"email": "rebotak@gmail.com"
+		"name": "Chris Shomo"
 	},
 	"main": "./vue-winwheel.vue",
 	"keywords": [
@@ -15,10 +14,16 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/rebotak/vue-winwheel.git"
+		"url": "git+https://github.com/cshomo11/vue-winwheel.git"
 	},
 	"license": "MIT",
 	"dependencies": {
 		"gsap": "^2.0.2"
+	},
+	"devDependencies": {
+		"eslint": "^7.2.0",
+		"eslint-config-airbnb-base": "^14.2.1",
+		"eslint-plugin-import": "^2.22.1",
+		"eslint-plugin-vue": "^7.18.0"
 	}
 }
