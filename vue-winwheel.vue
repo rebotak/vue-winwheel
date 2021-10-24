@@ -48,6 +48,10 @@ export default {
       type: String,
       default: '',
     },
+    sound: {
+      type: Audio,
+      default: null,
+    },
     segments: {
       type: Array,
       default() {
@@ -103,6 +107,7 @@ export default {
       modalPrize: false,
       wheelPower: 1,
       wheelSpinning: false,
+      tickSound: null,
       prizeName: 'BUY 1 GET 1',
       WinWheelOptions: {
         textFontSize: 14,
@@ -112,6 +117,7 @@ export default {
         animation: {
           type: 'spinOngoing',
           duration: 0.5,
+          callbackSound: this.playSound,
         },
       },
     };
@@ -119,6 +125,9 @@ export default {
 
   mounted() {
     this.initSpin();
+    if (this.sound) {
+      this.tickSound = this.sound;
+    }
   },
   methods: {
     showPrize() {
@@ -127,6 +136,14 @@ export default {
 
     hidePrize() {
       this.modalPrize = false;
+    },
+
+    playSound() {
+      if (this.tickSound) {
+        this.tickSound.pause();
+        this.tickSound.currentTime = 0;
+        this.tickSound.play();
+      }
     },
 
     startSpin() {
@@ -174,15 +191,15 @@ export default {
     },
 
     initSpin() {
-	  this.loadingPrize = true;
-	  this.resetWheel();
-	  this.loadingPrize = false;
+      this.loadingPrize = true;
+      this.resetWheel();
+      this.loadingPrize = false;
     },
 
     onFinishSpin(indicatedSegment) {
       this.prizeName = indicatedSegment.text;
       this.showPrize();
-			this.$emit('finish-spin');
+      this.$emit('finish-spin');
     },
   },
 };
@@ -198,7 +215,6 @@ export default {
 
 .vue-winwheel {
 	text-align: center;
-	background-image: url('/static/img/obstacle-run/bg-spinner-mobile.svg');
 	background-size: cover;
 	background-position: center bottom;
 	background-repeat: no-repeat;
