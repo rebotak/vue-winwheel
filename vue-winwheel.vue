@@ -5,16 +5,18 @@
       id="modalSpinwheel"
       class="custom-modal modal-mask"
     >
-      <div slot="body">
-        <a
-          href=""
-          class="modal-dismiss"
-          @click.prevent="hidePrize()"
-        >
-          <i class="icon_close" />
-        </a>
-        <h1> {{ prizeName }}</h1>
-      </div>
+      <slot name="body">
+        <div>
+          <a
+            href=""
+            class="modal-dismiss"
+            @click.prevent="hidePrize()"
+          >
+            <i class="icon_close" />
+          </a>
+          <h1> {{ prizeName }}</h1>
+        </div>
+      </slot>
     </div>
     <div class="mobile-container">
       <h1 v-if="wheelTitle">
@@ -30,7 +32,7 @@
             <p
               style="color: white"
               align="center"
-            >Sorry, your browser doesn't support canvas. Please try Google Chrome.</p>
+            />
           </canvas>
         </div>
       </div>
@@ -46,11 +48,11 @@ export default {
   props: {
     wheelTitle: {
       type: String,
-      default: '',
+      default: ''
     },
     sound: {
       type: Audio,
-      default: null,
+      default: null
     },
     segments: {
       type: Array,
@@ -59,46 +61,46 @@ export default {
           {
             textFillStyle: '#fff',
             fillStyle: '#000',
-            text: 'Prize 1',
+            text: 'Prize 1'
           },
           {
             textFillStyle: '#000',
             fillStyle: '#fadede',
-            text: 'Prize 2',
+            text: 'Prize 2'
           },
           {
             textFillStyle: '#fff',
             fillStyle: '#000',
-            text: 'Prize 3',
+            text: 'Prize 3'
           },
           {
             textFillStyle: '#000',
             fillStyle: '#fadede',
-            text: 'Prize 4',
+            text: 'Prize 4'
           },
           {
             textFillStyle: '#fff',
             fillStyle: '#000',
-            text: 'Prize 5',
+            text: 'Prize 5'
           },
           {
             textFillStyle: '#000',
             fillStyle: '#fadede',
-            text: 'Prize 6',
+            text: 'Prize 6'
           },
           {
             textFillStyle: '#fff',
             fillStyle: '#000',
-            text: 'Prize 7',
+            text: 'Prize 7'
           },
           {
             textFillStyle: '#000',
             fillStyle: '#fadede',
-            text: 'Prize 8',
-          },
+            text: 'Prize 8'
+          }
         ];
-      },
-    },
+      }
+    }
   },
   data() {
     return {
@@ -117,9 +119,9 @@ export default {
         animation: {
           type: 'spinOngoing',
           duration: 0.5,
-          callbackSound: this.playSound,
-        },
-      },
+          callbackSound: this.playSound
+        }
+      }
     };
   },
 
@@ -156,10 +158,10 @@ export default {
           segments: this.segments,
           animation: {
             type: 'spinToStop',
-            duration: 5,
-            spins: 5,
-            callbackFinished: this.onFinishSpin,
-          },
+            duration: this.generateRandomNumber(4, 7),
+            spins: this.generateRandomNumber(5, 9),
+            callbackFinished: this.onFinishSpin
+          }
         });
 
         // example input prize number get from Backend
@@ -178,7 +180,7 @@ export default {
       this.theWheel = new Winwheel.Winwheel({
         ...this.WinWheelOptions,
         numSegments: this.segments.length,
-        segments: this.segments,
+        segments: this.segments
       });
 
       if (this.wheelSpinning) {
@@ -201,7 +203,13 @@ export default {
       this.showPrize();
       this.$emit('finish-spin');
     },
-  },
+
+    generateRandomNumber(min, max) {
+      const minNum = Math.ceil(min);
+      const maxNum = Math.floor(max);
+      return Math.floor(Math.random() * (maxNum - minNum + 1) + minNum);
+    }
+  }
 };
 
 </script>

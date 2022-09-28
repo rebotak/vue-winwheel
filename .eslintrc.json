@@ -8,6 +8,7 @@
     "plugin:vue/recommended"
   ],
   "rules": {
+    "comma-dangle": ["error", "never"],
     "linebreak-style": "off",
     "max-classes-per-file": "off",
     "max-len": ["warn", 130]
